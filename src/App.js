@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+ import React from'react';
 import './App.css';
-
+import animalSampleData from "./constants/animals"
+import AnimalImage from './animallist';
+import server from "react-dom/server"
 function App() {
+  const [animalName, setAnimalName] = React.useState("dog")
+  const Myapp = server.renderToString(<AnimalImage animal={animalName} />)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="d-flex flex-column justify-content-center align-items-center">
+
+      {
+        animalSampleData.map((i)=>(
+          <div key={i.id}>
+            <button onClick={()=>{setAnimalName(i.name)}}>{i.name}</button>
+            <div>Age: {i.age}</div>
+            <div>Last feeding time: {i.lastFeedingTime}</div>
+          </div>
+        ))
+      }
+       
+      <iframe  srcDoc={Myapp}  height={600} width={"100%"} title='animal image' />
     </div>
   );
 }
